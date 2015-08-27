@@ -1,0 +1,196 @@
+.NET vs The World
+
+	Co je .NET?
+	
+	Rodiel medzi VB6 kompilaciou a .NET Just in time kompilaciou?
+		Medzipreklad do MSILu (CILu)
+		Vyhody/Nevyhody
+		
+	Comu sa .NET s ostatnych plaforiem podoba?
+	
+	Cim sa .NET lisi spravou pamati?
+	Co je GarbageCollector?
+		
+	Co je to Assembly?
+	Co je to Aplikacna domena?
+	Naco sluzi Application Manifest?
+
+	Aky je rozdiel medzi vlaknom a procesom?
+	Aky ma vyznam programovat viacvlaknovo (paralalne)?
+	Ide (ak, tak ako) v .NETe programovat paralelne?
+
+	Co je to WinForms?
+	Co je, na co sluzi WPF?
+	Co je XAML? Je XAML nieco ako XML?
+	Co je, s cim suvisi ADO.NET? 
+
+	Cielom tejto casti je pochopit, co je to .NET, co vsetko pod tento pojem spada,
+	co nove prinasa a ake vyhody a nevyhody prinasa oproti inym platformam.
+	Rovnako by sa mal posluchac zoznamit s technologiami suvisiacimi s frameworkom,
+	akym sposobom a v akych scenaroch ich pouzit.
+
+GENERAL PROGRAMMING
+	
+	Co su triedy?
+	Co su objekty?
+	Co je member? Co je shared member?
+	
+	Rozdiel public vs protected vs private (vs friend)
+	
+	Co to su referencne a hodnotove typy?
+	Aky je rozdiel medzi inicializaciou a alokaciou v pamati referencnych a hodnotovych typov?
+	
+	Klucove slova ByVal vs ByRef
+	Viem hodnotovy typ predat referenciou? Viem referencny typ predat hodnotou? ;)
+	
+	Vysvelit pojmy Structure, Enumeration, Nullable, Class, Array, Delegate? Su to hodnotove, alebo referencne typy?
+	Ake su rozdiely medzi Class a Structure?
+	
+	Akym sposobom vieme definovat viacrozmerne polia?
+	
+	Co je konstruktor? Poskytuje trieda nieco ako default konstruktor? Co v pripade ze pridavam overloady konstruktoru?
+	Co je inheritance (dedicnost)? Na co to vobec je? Prinasa tento koncept jazyku nieco naviac?
+	
+	Co su funkcie? 
+	Aky je rozdiel medzi Function a Sub?
+	
+	Aky je rozdiel medzi overridable a obycajnou funkciou?
+	Vysvetli klucove slova Overrides, Overridable, Overloads, Shadows, NonInheritable, MustInherit
+	
+	Co su, naco sluzia Genericke typy? Pridava nieco jazyku generickost?
+	
+	Kolekcie vs genericke kolekcie - vyhody
+	Rozdiel medzi List, SortedList, Array, SortedSet, HashSet, Dictionary - porovnanie rychlosti, implementacie, use cases
+	
+	Me, MyClass, MyBase
+	
+	Co to je a naco sluzi interface?
+	Predstavenie IEnumerable, IDisposable, IComparable, ISerializable
+	
+	Co to je implicitne vs explicitne pretypovanie?
+	Rozdiely CType vs DirectCast
+	
+	Co je to delegat?
+	Co su eventy? Ako vznikaju? Viem (a ako) v .NETe vytvarat vlastne eventy?
+	Akym mechanizmom viem eventy odchytavat a osetrovat?
+	
+	Rozdiel medzi Handles a AddHandler
+	
+	Co su vynimky? Na co sluzia? Ako sa osetruju? Ako sa vytvaraju vlastne?
+	
+	Syntactic sugar:
+	Vysvetli klucove slova With, Using. V akych scenaroch je vhodne ich pouzit?
+	
+	Co su extension metody?
+	
+	Co znamena, ze trida String je Immutable? Naco to je dobre? Ako to obist?
+	
+	Prebrane klucove slova:
+	Structure, Enumeration, Nullable, Class, Array, Delegate
+	Public, Protected, Private, Friend
+	Property, Dim, Static, Shared
+	Function, Sub, return
+	If, If(), Select case, For, For each, While, Do While, break, With, Using
+	Delegate, Event
+	
+Dalsie temy, ktore sa budu preberat podrobnejsie:
+
+WinForms
+	dolezite Controls
+	praca s grafickym navrhom
+	tvorba vlastnych Controls
+	event handling
+	
+	winForms vs WPF
+	
+ADO.NET framework
+	dolezite interfaci
+	praca s frameworkom od vytvorenia az po ukoncenie spojenia :)
+	
+LINQ
+	ulahcujeme si zivot
+	
+praca s XML
+
+OBJEKTOVY NAVRH
+--> Vytvorte kolekciu tried (tak 4-6) ktore budu reprezentovat strukturu skolenia. Mala by obsahovat triedy ako Clovek, Skolitel, Skoleny, Kurz, Termin. 
+	Mal by vystihovat vazby ako "Skolitel skoli tieto kurzy", "Kurz ma tieto terminy". Vytvorte metodu AbsolvujSkolenie(int cena), ktora bude dostupna u objektu Skolitel aj Skoleny. Do navrhu pridajte par zmysluplnych properties, metod a kolekcii.
+	Priklad ma demonstrovat spravny objektovy navrh nejakej modelovanej reality, ilustraciu abstraktnych tried, interfacov a hlavne virtualnych metod pri prepisovani spravania metody
+
+KOLEKCIE
+--> Vytvor "benchmark", ktory ukaze, ktore operacie su najrychlejsie na ktorych kolekciach. Vkladanie, pristup k prvku na zaklade indexu, 
+vyhladanie prvku.
+
+ICOMPARABLE - Introduction to IComparable
+--> Vytvorte genericku triedu Zoznam(of T). Vytvorte metodu Add(P as T), ktora umozni pridavanie novych prvkov. Pouzite interface, na vynutenie moznosti porovnania dvoch prvkov T. Implementuje metodu Sort(). 
+
+IENUMERABLE
+--> Vytvorte triedu, ktora bude reprezentovat nejaky iterovatelny list, bude implementovat interface IEnumerable, tj. bude ju mozne prechadzat pomocou For each
+--> Dalej bude obsahovat default property, tj. k prvkom bude mozne pristupovat ako nazevInstance(index as int)
+
+PRACA SO SUBORMI
+--> Vytvorte konzolovu aplikaciu, ktora spocita pocet slov v textovom subore. Nazov suboru zoberie ako parameter. 
+	Kladte doraz na osetrenie neexistujucich suborov a inych chyb, ktore mozu nastat.
+--> Rozsirte program tak, aby ako parameter zobral nazov adresara. Spocita pocty slov vo vsetkych suboroch daneho adresara (len s priponou .txt)
+	a vysledky ulozi do suboru wc.txt vo forme NazovSuboru.txt ... pocetSlov
+	
+XML
+--> Vyskusajte si pracu s XML formatom. Vytvorte XML subor modelujuci nejaku realitu (telefonny zoznam, kucharska kniha, vysledky zapasov).
+	Vytvorte aplikaciu, ktora nacita tento XML subor, vypise jednotlive prvky v nejakej prehladnej forme, a umozni urcitu cast tychto dat modifikovat.
+	Vsetky zmeny sa po ulozeni prejavia v XML subore.
+	
+WINPROC
+--> Vytvorte funkciu, ktora sa spusti, ak uzivatel stlaci Ctrl+S (pripadne inu skratku)
+
+WINFORMS
+--> Pomocou WinForms vytvorte jednoduchu verziu hry Miny - vo forme budu v mriezke rozmiestnene tlacitka
+	pri spusteni si v nejakej rozumnej datovej strukture vygenerujem zoznam min
+	ak v aplikacii kliknem na tlacitko s minou, zobrazi sa hlaska "Prehrali ste", ak nie, nestane sa nic
+	Aplikaciu navrhnite tak, aby sme pocet min a rozmery hracej plochy vedeli velmi jednoducho zmenit
+--> K aplikacii Miny pridajte subor config.xml, ktory bude obsahovat pocet min a rozmery hracej plochy. Aplikacie si tieto parametre nacita.
+
+WEB CRAWLER
+--> naprogamujte vlastny webCrawler
+	program bude vyhladavat emailove adresy na internete. Prehladavanie zacne na nami zadanej stranke, skusi vyhladat emailove adresy, tie ktore najde ulozi. Dalej skusi vyhladat akekolvek odkazy, ak najde tak pokracuje v prehladavani na nich.
+--> Skuste program rozsirit tak, aby naozaj fungoval dobre. Tj -> pamata si, kde uz bol, aby nechodil na rovnaku stranku dvakrat, emaily si uklada (niekam) priebezne, aby s pripade chyby nestratil data. Program by mal zvladnut stav, ked nenajde mu server na danej URL nevrati ziadne data atd...
+--> V idealnom pripade by takyto program malo stavit spustit raz a nam by sa databaza mala plnit emailami, vhodnymi pre spamovanie rozneho druhu :)
+
+SERVER/CLIENT
+--> naprogramojte vlastny web server
+	Vytvorte dve aplikacie. Jedna z nich bude predstavovat server, bude pocuvat na vhodnom neobsadenom porte. Druha predstavuje klienta. Klient sa po spusteni pripoji na pocuvaci port, a moze so serverom komunikovat. Staci, ak napriklad moze serveru poslat spravu ("Ahoj") a ten mu vrati napriklad pocet slov v danej sprave
+--> Rozsirte aplikaciu nasledovne. Server bude uzivatelovi vracat data z databazy (nie relacnej, staci napriklad list nejakych objektov). Klient bude moct posielat ID objektu, a server mu vrati jeho Popis (pripadne iny zmysluplny scenar)
+--> Rozsirte aplikaciu tak, aby bol server schopny obsluzit viacerych klientov :)
+
+WINFORMS + ADO.NET
+--> Vytvorte databazovu aplikaciu typu klient/server. V databazi vytvorte tabulku Uzivatel(ID, Login, Heslo, Meno, Priezvisko). Aplikacia po spusteni ponukne uzivatelovi login screen (textboxy Login + Heslo, tlacitko prihlasit). Ak sa uzivatel prihlasi pod svojim menom, vyskoci mu hlavne okno aplikacie, na ktorom sa objavi hlaska, "Vitajte + meno + priezvisko". Uspesne prihlasenie sa overuje pripojenim do DB, a porovnanie zadaneho hesla s ulozenym heslom
+--> Aplikaciu rozsirte o tabulku Objednavky(ID, id_Uzivatel, Cena, Popis, Pocet). Po prihlaseni sa uzivatelovi pomocou vhodneho user controlu zobrazia VSETKY objednavky z databazi. Formular bude obsahovat checkbox "Iba moje", ktory umozni vyfiltrovat iba tie objednavky, u ktorych id_Uzivatel=id_PrihlasenyUzivatel
+--> Rozsirte aplikaciu tak, aby objednavky, ktore maju pocet=0 boli zobrazene cervenou
+--> Rozsirte aplikaciu tak, aby po kliknuti na riadok s objednavkou sa otvoril formular, ktory bude obsahovat detail objednavky
+--> Rozsirte aplikaciu tak, aby sa akekolvek zmeny v aplikacii prejavili v databazi
+
+REGISTRE
+--> skuste niektoru vytvorenu aplikaciu obohatit o zapis do registrov Windows. Co zmysluplne by do nich slo zapisat?
+
+
+Po dokonceni kurzu by mal mat ucastnik dost konkrentu predstavu akym sposobom a s vyuzitim akych technologii by uvedene problemy riesil.
+Problemy, ktore budu posluchaca najviac zaujimat, budu na kurze preberane a riesene.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

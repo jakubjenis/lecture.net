@@ -1,0 +1,2129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://xml.profitour.sk/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s1="http://xml.profitour.sk/AbstractTypes" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://xml.profitour.sk/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">&lt;b&gt;Význam obecných parametrů:&lt;/b&gt;&lt;br /&gt;- &lt;b&gt;id_Organizace&lt;/b&gt; - ID, které Vám (nebo organizaci pro kterou rozhraní implementujete) bylo přiděleno při zřízení služby. Volání metod je omezeno podle IP adresy a při uvedení neplatného ID organizace, nebo přístupu z nepovolené adresy bude vrácena chyba "Access denied".&lt;br /&gt;- &lt;b&gt;id_Jazyk&lt;/b&gt; - Udává jazyk (cs/sk), který bude použit pro překlad ID na názvy z číselníků při použití parametru VypsatNazvy=True.&lt;br /&gt;- &lt;b&gt;VypsatNazvy&lt;/b&gt; - Při nastavení na True bude ke všem hodnotám id_NazevCiselniku přidán atribut str_NazevCiselniku, který bude obsahovat textový název pro konkrétní ID podle zvoleného id_Jazyk.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://xml.profitour.sk/">
+      <s:element name="HotTipy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Republika" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="id_Jazyk">
+        <s:restriction base="s:string">
+          <s:enumeration value="cs" />
+          <s:enumeration value="sk" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="HotTipyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HotTipyResult" type="tns:ResultOfTerminTipList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ResultOfTerminTipList">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:ArrayOfTerminTip" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfTerminTip">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TerminTip" nillable="true" type="tns:TerminTip" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TerminTip">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Termin">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Obrazek" type="tns:Obrazek" />
+            </s:sequence>
+            <s:attribute name="id_Republika" type="s:string" />
+            <s:attribute name="Nazev" type="s:string" />
+            <s:attribute name="id_Stat" type="s:int" use="required" />
+            <s:attribute name="id_Oblast" type="s:int" use="required" />
+            <s:attribute name="id_Stredisko" type="s:int" use="required" />
+            <s:attribute name="Hvezdy" type="s:int" use="required" />
+            <s:attribute name="Plus" type="s:boolean" use="required" />
+            <s:attribute name="id_Strava" type="s:int" use="required" />
+            <s:attribute name="str_Stat" type="s:string" />
+            <s:attribute name="str_Oblast" type="s:string" />
+            <s:attribute name="str_Stredisko" type="s:string" />
+            <s:attribute name="str_Strava" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Termin">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Letiste" type="tns:ArrayOfLetiste" />
+            </s:sequence>
+            <s:attribute name="ID" type="s:int" use="required" />
+            <s:attribute name="id_Zajezd" type="s:int" use="required" />
+            <s:attribute name="DatumOd" type="s:dateTime" use="required" />
+            <s:attribute name="DatumDo" type="s:dateTime" use="required" />
+            <s:attribute name="Dni" type="s:int" use="required" />
+            <s:attribute name="Noci" type="s:int" use="required" />
+            <s:attribute name="id_Doprava" type="s:int" use="required" />
+            <s:attribute name="LastMinute" type="s:boolean" use="required" />
+            <s:attribute name="FirstMinute" type="s:boolean" use="required" />
+            <s:attribute name="CenaOd" type="s:decimal" use="required" />
+            <s:attribute name="PriplatkyOd" type="s:decimal" use="required" />
+            <s:attribute name="CenaCelkemOd" type="s:decimal" use="required" />
+            <s:attribute name="CenaOdKatalog" type="s:decimal" use="required" />
+            <s:attribute name="PriplatkyOdKatalog" type="s:decimal" use="required" />
+            <s:attribute name="CenaCelkemOdKatalog" type="s:decimal" use="required" />
+            <s:attribute name="id_Mena" type="s:string" />
+            <s:attribute name="str_Doprava" type="s:string" />
+            <s:attribute name="str_Mena" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DataItem" />
+      <s:complexType name="Obrazek">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:attribute name="URL120x90" type="s:string" />
+            <s:attribute name="URL200x140" type="s:string" />
+            <s:attribute name="URL" type="s:string" />
+            <s:attribute name="Popis" type="s:string" />
+            <s:attribute name="Zdroj" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Letiste">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:attribute name="id_Letiste" type="s:int" use="required" />
+            <s:attribute name="str_Letiste" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfLetiste">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Letiste" nillable="true" type="tns:Letiste" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Hotel">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HotelResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HotelResult" type="tns:ResultOfHotelPopisItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ResultOfHotelPopisItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:HotelPopis" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="HotelPopis">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Hotel">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="OdCentra" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="OdLetiste" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="OdPlaze" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="OdSjezdovky" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="OdSkibusu" nillable="true" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Popis" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Vybaveni" type="tns:ArrayOfVybaveni" />
+              <s:element minOccurs="0" maxOccurs="1" name="Obrazky" type="tns:ArrayOfObrazek" />
+            </s:sequence>
+            <s:attribute name="id_TypHotel" type="s:int" use="required" />
+            <s:attribute name="str_TypHotel" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Hotel">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:attribute name="ID" type="s:int" use="required" />
+            <s:attribute name="id_Stat" type="s:int" use="required" />
+            <s:attribute name="id_Oblast" type="s:int" use="required" />
+            <s:attribute name="id_Stredisko" type="s:int" use="required" />
+            <s:attribute name="Nazev" type="s:string" />
+            <s:attribute name="Hvezdy" type="s:int" use="required" />
+            <s:attribute name="Plus" type="s:boolean" use="required" />
+            <s:attribute name="str_Stat" type="s:string" />
+            <s:attribute name="str_Oblast" type="s:string" />
+            <s:attribute name="str_Stredisko" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfVybaveni">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Vybaveni" nillable="true" type="tns:Vybaveni" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Vybaveni">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:attribute name="id_TypVybaveni" type="s:int" use="required" />
+            <s:attribute name="str_TypVybaveni" type="s:string" />
+            <s:attribute name="Popis" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfObrazek">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Obrazek" nillable="true" type="tns:Obrazek" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="KalkulaceFlat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Termin" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Hotely" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Letiste" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_TransferTrasa" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Strava" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Dni" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="KalkulaceFlatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="KalkulaceFlatResult" type="tns:ResultOfKalkulaceItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ResultOfKalkulaceItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:Kalkulace" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Kalkulace">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Ceniky" type="tns:ArrayOfCenik" />
+          <s:element minOccurs="0" maxOccurs="1" name="Poznamka" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCenik">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Cenik" nillable="true" type="tns:Cenik" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Cenik">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Ceny" type="tns:ArrayOfCena" />
+        </s:sequence>
+        <s:attribute name="Nazev" type="s:string" />
+        <s:attribute name="Hvezdy" type="s:int" use="required" />
+        <s:attribute name="Plus" type="s:boolean" use="required" />
+      </s:complexType>
+      <s:complexType name="ArrayOfCena">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Cena" nillable="true" type="tns:Cena" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Cena">
+        <s:simpleContent>
+          <s:extension base="s:string">
+            <s:attribute name="ID" type="s:string" />
+            <s:attribute name="Nazev" type="s:string" />
+            <s:attribute name="Typ" type="tns:TypCena" use="required" />
+            <s:attribute name="Osob" type="s:int" use="required" />
+            <s:attribute name="Cena" type="s:decimal" use="required" />
+            <s:attribute name="CenaOriginal" type="s:decimal" use="required" />
+            <s:attribute name="id_Mena" type="s:string" />
+            <s:attribute name="str_Mena" type="s:string" />
+            <s:attribute name="PocetMax" type="s:int" use="required" />
+          </s:extension>
+        </s:simpleContent>
+      </s:complexType>
+      <s:simpleType name="TypCena">
+        <s:restriction base="s:string">
+          <s:enumeration value="ZakladniCena" />
+          <s:enumeration value="PovinnyPriplatek" />
+          <s:enumeration value="NepovinnyPriplatek" />
+          <s:enumeration value="Sleva" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="Kalkulace">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Termin" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Hotely" type="tns:ArrayOfZajezdHotelInput" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Letiste" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_TransferTrasa" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Strava" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Dni" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfZajezdHotelInput">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ZajezdHotelInput" nillable="true" type="tns:ZajezdHotelInput" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ZajezdHotelInput">
+        <s:attribute name="ID" type="s:int" use="required" />
+        <s:attribute name="id_Strava" type="s:int" use="required" />
+        <s:attribute name="id_TypUbytovani" type="s:int" use="required" />
+      </s:complexType>
+      <s:element name="KalkulaceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="KalkulaceResult" type="tns:ResultOfKalkulaceItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ZajezdTerminFlat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_ZajezdHotel" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ZajezdTerminFlatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ZajezdTerminFlatResult" type="tns:ResultOfZajezdTerminItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ResultOfZajezdTerminItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:ZajezdTermin" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ZajezdTermin">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ZajezdKategorie" type="tns:ArrayOfZajezdKategorie" />
+              <s:element minOccurs="0" maxOccurs="1" name="Termin" type="tns:Termin" />
+              <s:element minOccurs="0" maxOccurs="1" name="Hotely" type="tns:ArrayOfZajezdHotelPopis" />
+              <s:element minOccurs="0" maxOccurs="1" name="TransferTrasa" type="tns:ArrayOfTransferTrasa" />
+              <s:element minOccurs="0" maxOccurs="1" name="Strava" type="tns:ArrayOfStrava" />
+            </s:sequence>
+            <s:attribute name="ID" type="s:int" use="required" />
+            <s:attribute name="Nazev" type="s:string" />
+            <s:attribute name="id_Republika" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfZajezdKategorie">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ZajezdKategorie" nillable="true" type="tns:ZajezdKategorie" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ZajezdKategorie">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:attribute name="id_TypZajezdKategorie" type="s:int" use="required" />
+            <s:attribute name="str_TypZajezdKategorie" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfZajezdHotelPopis">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ZajezdHotelPopis" nillable="true" type="tns:ZajezdHotelPopis" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ZajezdHotelPopis">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ZajezdHotelBaseItem">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Hotel" type="tns:HotelPopis" />
+              <s:element minOccurs="0" maxOccurs="1" name="Strava" type="tns:ArrayOfStrava" />
+              <s:element minOccurs="0" maxOccurs="1" name="TypUbytovani" type="tns:ArrayOfTypUbytovani" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ZajezdHotelBaseItem" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Skupina" nillable="true" type="s:int" />
+            </s:sequence>
+            <s:attribute name="ID" type="s:int" use="required" />
+            <s:attribute name="Poradi" type="s:int" use="required" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfStrava">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Strava" nillable="true" type="tns:Strava" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Strava">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:attribute name="id_Strava" type="s:int" use="required" />
+            <s:attribute name="str_Strava" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfTypUbytovani">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TypUbytovani" nillable="true" type="tns:TypUbytovani" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TypUbytovani">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:attribute name="ID" type="s:int" use="required" />
+            <s:attribute name="Nazev" type="s:string" />
+            <s:attribute name="Luzek" type="s:int" use="required" />
+            <s:attribute name="Pristylek" type="s:int" use="required" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfTransferTrasa">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TransferTrasa" nillable="true" type="tns:TransferTrasa" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TransferTrasa">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Cena" nillable="true" type="s:decimal" />
+            </s:sequence>
+            <s:attribute name="ID" type="s:int" use="required" />
+            <s:attribute name="Nazev" type="s:string" />
+            <s:attribute name="id_TransferMisto" type="s:int" use="required" />
+            <s:attribute name="id_Mena" type="s:string" />
+            <s:attribute name="str_TransferMisto" type="s:string" />
+            <s:attribute name="str_Mena" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ZajezdTermin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_ZajezdHotel" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ZajezdTerminResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ZajezdTerminResult" type="tns:ResultOfZajezdTerminItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Vylet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VyletResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VyletResult" type="tns:ResultOfVyletPopisItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ResultOfVyletPopisItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:VyletPopis" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="VyletPopis">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Vylet">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Popis" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Obrazky" type="tns:ArrayOfObrazek" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Vylet">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Cena" nillable="true" type="s:decimal" />
+            </s:sequence>
+            <s:attribute name="ID" type="s:int" use="required" />
+            <s:attribute name="Nazev" type="s:string" />
+            <s:attribute name="id_Mena" type="s:string" />
+            <s:attribute name="str_Mena" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="Zajezd">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ZajezdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ZajezdResult" type="tns:ResultOfZajezdItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ResultOfZajezdItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:Zajezd" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Zajezd">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Popis" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ZajezdKategorie" type="tns:ArrayOfZajezdKategorie" />
+              <s:element minOccurs="0" maxOccurs="1" name="Obrazky" type="tns:ArrayOfObrazek" />
+              <s:element minOccurs="0" maxOccurs="1" name="Vybaveni" type="tns:ArrayOfVybaveni" />
+              <s:element minOccurs="0" maxOccurs="1" name="Vylety" type="tns:ArrayOfVylet" />
+              <s:element minOccurs="0" maxOccurs="1" name="Hotely" type="tns:ArrayOfZajezdHotel" />
+              <s:element minOccurs="0" maxOccurs="1" name="Terminy" type="tns:ArrayOfTermin" />
+            </s:sequence>
+            <s:attribute name="ID" type="s:int" use="required" />
+            <s:attribute name="Nazev" type="s:string" />
+            <s:attribute name="id_Republika" type="s:string" />
+            <s:attribute name="CenaOd" type="s:decimal" use="required" />
+            <s:attribute name="PriplatkyOd" type="s:decimal" use="required" />
+            <s:attribute name="CenaCelkemOd" type="s:decimal" use="required" />
+            <s:attribute name="CenaOdKatalog" type="s:decimal" use="required" />
+            <s:attribute name="PriplatkyOdKatalog" type="s:decimal" use="required" />
+            <s:attribute name="CenaCelkemOdKatalog" type="s:decimal" use="required" />
+            <s:attribute name="id_Mena" type="s:string" />
+            <s:attribute name="str_Mena" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfVylet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Vylet" nillable="true" type="tns:Vylet" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfZajezdHotel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ZajezdHotel" nillable="true" type="tns:ZajezdHotel" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ZajezdHotel">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ZajezdHotelBaseItem">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Hotel" type="tns:Hotel" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfTermin">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Termin" nillable="true" type="tns:Termin" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Dostupnost">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Republika" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Typ" type="tns:TypDostupnost" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_TypZajezdKategorie" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Stat" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Oblast" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Stredisko" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="LastMinute" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="FirstMinute" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Doprava" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Letiste" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CenaOdMin" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CenaOdMax" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Mena" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="DatumOdMin" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="DatumDoMax" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_CK" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="TypDostupnost">
+        <s:restriction base="s:string">
+          <s:enumeration value="TypZajezdKategorie" />
+          <s:enumeration value="Staty" />
+          <s:enumeration value="Oblasti" />
+          <s:enumeration value="Strediska" />
+          <s:enumeration value="Vse" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="DostupnostResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DostupnostResult" type="tns:ResultOfDostupnostList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ResultOfDostupnostList">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:ArrayOfDostupnost" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDostupnost">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Dostupnost" nillable="true" type="tns:Dostupnost" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Dostupnost">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:attribute name="PocetZajezdu" type="s:int" use="required" />
+            <s:attribute name="PocetTerminu" type="s:int" use="required" />
+            <s:attribute name="CenaOd" type="s:decimal" use="required" />
+            <s:attribute name="CenaCelkemOd" type="s:decimal" use="required" />
+            <s:attribute name="CenaOdKatalog" type="s:decimal" use="required" />
+            <s:attribute name="CenaCelkemOdKatalog" type="s:decimal" use="required" />
+            <s:attribute name="id_Mena" type="s:string" />
+            <s:attribute name="str_Mena" type="s:string" />
+            <s:attribute default="0" name="id_TypZajezdKategorie" type="s:int" />
+            <s:attribute default="" name="str_TypZajezdKategorie" type="s:string" />
+            <s:attribute default="0" name="id_Stat" type="s:int" />
+            <s:attribute default="" name="str_Stat" type="s:string" />
+            <s:attribute default="0" name="id_Oblast" type="s:int" />
+            <s:attribute default="" name="str_Oblast" type="s:string" />
+            <s:attribute default="0" name="id_Stredisko" type="s:int" />
+            <s:attribute default="" name="str_Stredisko" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="PocasiFlat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="Typ" type="tns:TypPocasi" />
+            <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="TypPocasi">
+        <s:restriction base="s:string">
+          <s:enumeration value="Staty" />
+          <s:enumeration value="Oblasti" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="PocasiFlatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PocasiFlatResult" type="tns:ResultOfPocasiList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ResultOfPocasiList">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:ArrayOfPocasi" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPocasi">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Pocasi" nillable="true" type="tns:Pocasi" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Pocasi">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:attribute name="Datum" type="s:dateTime" use="required" />
+            <s:attribute name="DenTeplota" type="s:int" use="required" />
+            <s:attribute name="DenIkona" type="s:int" use="required" />
+            <s:attribute name="NocTeplota" type="s:int" use="required" />
+            <s:attribute name="NocIkona" type="s:int" use="required" />
+            <s:attribute default="0" name="id_Stat" type="s:int" />
+            <s:attribute default="" name="str_Stat" type="s:string" />
+            <s:attribute default="0" name="id_Oblast" type="s:int" />
+            <s:attribute default="" name="str_Oblast" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="Pocasi">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="Typ" type="tns:TypPocasi" />
+            <s:element minOccurs="0" maxOccurs="1" name="ID" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PocasiResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PocasiResult" type="tns:ResultOfPocasiList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HledaniMini">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Republika" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Max" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HledaniMiniResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HledaniMiniResult" type="tns:ResultOfZajezdVysledekList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ResultOfZajezdVysledekList">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:ZajezdVysledekList" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ZajezdVysledekList">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Zajezdy" type="tns:ArrayOfZajezdVysledek" />
+        </s:sequence>
+        <s:attribute name="PocetVysledku" type="s:int" use="required" />
+        <s:attribute name="ExistujeVice" type="s:boolean" use="required" />
+        <s:attribute name="PosledniStranka" type="s:boolean" use="required" />
+        <s:attribute name="PocetStranek" type="s:int" use="required" />
+      </s:complexType>
+      <s:complexType name="ArrayOfZajezdVysledek">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ZajezdVysledek" nillable="true" type="tns:ZajezdVysledek" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ZajezdVysledek">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Obrazek" type="tns:Obrazek" />
+              <s:element minOccurs="0" maxOccurs="1" name="Popis" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ZajezdKategorie" type="tns:ArrayOfZajezdKategorie" />
+              <s:element minOccurs="0" maxOccurs="1" name="Doprava" type="tns:ArrayOfDoprava" />
+              <s:element minOccurs="0" maxOccurs="1" name="Strava" type="tns:ArrayOfStrava" />
+              <s:element minOccurs="0" maxOccurs="1" name="Dni" type="tns:ArrayOfInt" />
+              <s:element minOccurs="0" maxOccurs="1" name="Letiste" type="tns:ArrayOfLetiste" />
+              <s:element minOccurs="0" maxOccurs="1" name="TransferMisto" type="tns:ArrayOfTransferMisto" />
+              <s:element minOccurs="0" maxOccurs="1" name="Vybaveni" type="tns:ArrayOfVybaveni" />
+              <s:element minOccurs="0" maxOccurs="1" name="VelikostUbytovani" type="tns:ArrayOfVelikostUbytovani" />
+              <s:element minOccurs="0" maxOccurs="1" name="Terminy" type="tns:ArrayOfTermin" />
+            </s:sequence>
+            <s:attribute name="ID" type="s:int" use="required" />
+            <s:attribute name="id_Republika" type="s:string" />
+            <s:attribute name="Nazev" type="s:string" />
+            <s:attribute name="DatumOdMin" type="s:dateTime" use="required" />
+            <s:attribute name="CenaOd" type="s:decimal" use="required" />
+            <s:attribute name="CenaCelkemOd" type="s:decimal" use="required" />
+            <s:attribute name="CenaOdKatalog" type="s:decimal" use="required" />
+            <s:attribute name="CenaCelkemOdKatalog" type="s:decimal" use="required" />
+            <s:attribute name="id_Mena" type="s:string" />
+            <s:attribute name="Hvezdy" type="s:int" use="required" />
+            <s:attribute name="Plus" type="s:boolean" use="required" />
+            <s:attribute name="id_Stat" type="s:int" use="required" />
+            <s:attribute name="id_Oblast" type="s:int" use="required" />
+            <s:attribute name="id_Stredisko" type="s:int" use="required" />
+            <s:attribute name="str_Mena" type="s:string" />
+            <s:attribute name="str_Stat" type="s:string" />
+            <s:attribute name="str_Oblast" type="s:string" />
+            <s:attribute name="str_Stredisko" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfDoprava">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Doprava" nillable="true" type="tns:Doprava" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Doprava">
+        <s:attribute name="id_Doprava" type="s:int" use="required" />
+        <s:attribute name="str_Doprava" type="s:string" />
+      </s:complexType>
+      <s:complexType name="ArrayOfTransferMisto">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TransferMisto" nillable="true" type="tns:TransferMisto" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TransferMisto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:attribute name="id_TransferMisto" type="s:int" use="required" />
+            <s:attribute name="str_TransferMisto" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfVelikostUbytovani">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="VelikostUbytovani" nillable="true" type="tns:VelikostUbytovani" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="VelikostUbytovani">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DataItem">
+            <s:attribute name="Luzek" type="s:int" use="required" />
+            <s:attribute name="Pristylek" type="s:int" use="required" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="HledaniFlat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Republika" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Skip" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Max" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="MaxTerminu" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_TypZajezdKategorie" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="DatumOdMin" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="DatumDoMax" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="DniMin" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="DniMax" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="LastMinute" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="FirstMinute" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Doprava" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Letiste" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Stat" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Oblast" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Stredisko" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_StravaMin" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_StravaMax" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_TypHotel" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="HvezdyMin" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdPlazeMax" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdSjezdovkyMax" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdSkibusuMax" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdLetisteMax" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdCentraMax" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CenaOdMin" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CenaOdMax" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Mena" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserAgent" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HledaniFlatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HledaniFlatResult" type="tns:ResultOfZajezdVysledekList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Hledani">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Republika" type="tns:ArrayOfString" />
+            <s:element minOccurs="1" maxOccurs="1" name="Skip" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Max" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="MaxTerminu" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_TypZajezdKategorie" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="DatumOdMin" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="DatumDoMax" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="DniMin" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="DniMax" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="LastMinute" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="FirstMinute" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Doprava" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Letiste" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Stat" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Oblast" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Stredisko" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_StravaMin" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_StravaMax" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_TypHotel" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="HvezdyMin" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdPlazeMax" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdSjezdovkyMax" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdSkibusuMax" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdLetisteMax" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdCentraMax" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CenaOdMin" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CenaOdMax" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Mena" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserAgent" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="HledaniResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HledaniResult" type="tns:ResultOfZajezdVysledekList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HledaniInterni">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_Organizace" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_Jazyk" type="tns:id_Jazyk" />
+            <s:element minOccurs="1" maxOccurs="1" name="VypsatNazvy" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Republika" type="tns:ArrayOfString" />
+            <s:element minOccurs="1" maxOccurs="1" name="Skip" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Max" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="MaxTerminu" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_TypZajezdKategorie" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="DatumOdMin" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="DatumDoMax" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="DniMin" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="DniMax" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="LastMinute" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="FirstMinute" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Doprava" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Letiste" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Stat" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Oblast" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Stredisko" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_StravaMin" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="id_StravaMax" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_TypHotel" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="HvezdyMin" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdPlazeMax" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdSjezdovkyMax" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdSkibusuMax" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdLetisteMax" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OdCentraMax" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CenaOdMin" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CenaOdMax" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Mena" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ZmenenoMin" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_TypVybaveni" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_CK" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="id_Katalog" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="Dospelych" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Deti" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Vek" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="Zdroj" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserAgent" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HledaniInterniResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HledaniInterniResult" type="tns:ResultOfZajezdVysledekList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ResultOfTerminTipList" nillable="true" type="tns:ResultOfTerminTipList" />
+      <s:element name="ResultOfHotelPopisItem" nillable="true" type="tns:ResultOfHotelPopisItem" />
+      <s:element name="ResultOfKalkulaceItem" nillable="true" type="tns:ResultOfKalkulaceItem" />
+      <s:element name="ResultOfZajezdTerminItem" nillable="true" type="tns:ResultOfZajezdTerminItem" />
+      <s:element name="ResultOfVyletPopisItem" nillable="true" type="tns:ResultOfVyletPopisItem" />
+      <s:element name="ResultOfZajezdItem" nillable="true" type="tns:ResultOfZajezdItem" />
+      <s:element name="ResultOfDostupnostList" nillable="true" type="tns:ResultOfDostupnostList" />
+      <s:element name="ResultOfPocasiList" nillable="true" type="tns:ResultOfPocasiList" />
+      <s:element name="ResultOfZajezdVysledekList" nillable="true" type="tns:ResultOfZajezdVysledekList" />
+    </s:schema>
+    <s:schema targetNamespace="http://xml.profitour.sk/AbstractTypes">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:complexType name="StringArray">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="String" type="s:string" />
+            </s:sequence>
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HotTipySoapIn">
+    <wsdl:part name="parameters" element="tns:HotTipy" />
+  </wsdl:message>
+  <wsdl:message name="HotTipySoapOut">
+    <wsdl:part name="parameters" element="tns:HotTipyResponse" />
+  </wsdl:message>
+  <wsdl:message name="HotelSoapIn">
+    <wsdl:part name="parameters" element="tns:Hotel" />
+  </wsdl:message>
+  <wsdl:message name="HotelSoapOut">
+    <wsdl:part name="parameters" element="tns:HotelResponse" />
+  </wsdl:message>
+  <wsdl:message name="KalkulaceFlatSoapIn">
+    <wsdl:part name="parameters" element="tns:KalkulaceFlat" />
+  </wsdl:message>
+  <wsdl:message name="KalkulaceFlatSoapOut">
+    <wsdl:part name="parameters" element="tns:KalkulaceFlatResponse" />
+  </wsdl:message>
+  <wsdl:message name="KalkulaceSoapIn">
+    <wsdl:part name="parameters" element="tns:Kalkulace" />
+  </wsdl:message>
+  <wsdl:message name="KalkulaceSoapOut">
+    <wsdl:part name="parameters" element="tns:KalkulaceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdTerminFlatSoapIn">
+    <wsdl:part name="parameters" element="tns:ZajezdTerminFlat" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdTerminFlatSoapOut">
+    <wsdl:part name="parameters" element="tns:ZajezdTerminFlatResponse" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdTerminSoapIn">
+    <wsdl:part name="parameters" element="tns:ZajezdTermin" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdTerminSoapOut">
+    <wsdl:part name="parameters" element="tns:ZajezdTerminResponse" />
+  </wsdl:message>
+  <wsdl:message name="VyletSoapIn">
+    <wsdl:part name="parameters" element="tns:Vylet" />
+  </wsdl:message>
+  <wsdl:message name="VyletSoapOut">
+    <wsdl:part name="parameters" element="tns:VyletResponse" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdSoapIn">
+    <wsdl:part name="parameters" element="tns:Zajezd" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdSoapOut">
+    <wsdl:part name="parameters" element="tns:ZajezdResponse" />
+  </wsdl:message>
+  <wsdl:message name="DostupnostSoapIn">
+    <wsdl:part name="parameters" element="tns:Dostupnost" />
+  </wsdl:message>
+  <wsdl:message name="DostupnostSoapOut">
+    <wsdl:part name="parameters" element="tns:DostupnostResponse" />
+  </wsdl:message>
+  <wsdl:message name="PocasiFlatSoapIn">
+    <wsdl:part name="parameters" element="tns:PocasiFlat" />
+  </wsdl:message>
+  <wsdl:message name="PocasiFlatSoapOut">
+    <wsdl:part name="parameters" element="tns:PocasiFlatResponse" />
+  </wsdl:message>
+  <wsdl:message name="PocasiSoapIn">
+    <wsdl:part name="parameters" element="tns:Pocasi" />
+  </wsdl:message>
+  <wsdl:message name="PocasiSoapOut">
+    <wsdl:part name="parameters" element="tns:PocasiResponse" />
+  </wsdl:message>
+  <wsdl:message name="HledaniMiniSoapIn">
+    <wsdl:part name="parameters" element="tns:HledaniMini" />
+  </wsdl:message>
+  <wsdl:message name="HledaniMiniSoapOut">
+    <wsdl:part name="parameters" element="tns:HledaniMiniResponse" />
+  </wsdl:message>
+  <wsdl:message name="HledaniFlatSoapIn">
+    <wsdl:part name="parameters" element="tns:HledaniFlat" />
+  </wsdl:message>
+  <wsdl:message name="HledaniFlatSoapOut">
+    <wsdl:part name="parameters" element="tns:HledaniFlatResponse" />
+  </wsdl:message>
+  <wsdl:message name="HledaniSoapIn">
+    <wsdl:part name="parameters" element="tns:Hledani" />
+  </wsdl:message>
+  <wsdl:message name="HledaniSoapOut">
+    <wsdl:part name="parameters" element="tns:HledaniResponse" />
+  </wsdl:message>
+  <wsdl:message name="HledaniInterniSoapIn">
+    <wsdl:part name="parameters" element="tns:HledaniInterni" />
+  </wsdl:message>
+  <wsdl:message name="HledaniInterniSoapOut">
+    <wsdl:part name="parameters" element="tns:HledaniInterniResponse" />
+  </wsdl:message>
+  <wsdl:message name="HotTipyHttpGetIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="id_Republika" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HotTipyHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultOfTerminTipList" />
+  </wsdl:message>
+  <wsdl:message name="HotelHttpGetIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HotelHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultOfHotelPopisItem" />
+  </wsdl:message>
+  <wsdl:message name="KalkulaceFlatHttpGetIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="id_Termin" type="s:string" />
+    <wsdl:part name="Hotely" type="s:string" />
+    <wsdl:part name="id_Letiste" type="s:string" />
+    <wsdl:part name="id_TransferTrasa" type="s:string" />
+    <wsdl:part name="id_Strava" type="s:string" />
+    <wsdl:part name="Dni" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="KalkulaceFlatHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultOfKalkulaceItem" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdTerminFlatHttpGetIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+    <wsdl:part name="id_ZajezdHotel" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdTerminFlatHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultOfZajezdTerminItem" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdTerminHttpGetIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+    <wsdl:part name="id_ZajezdHotel" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdTerminHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultOfZajezdTerminItem" />
+  </wsdl:message>
+  <wsdl:message name="VyletHttpGetIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VyletHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultOfVyletPopisItem" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdHttpGetIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultOfZajezdItem" />
+  </wsdl:message>
+  <wsdl:message name="DostupnostHttpGetIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="id_Republika" type="s:string" />
+    <wsdl:part name="Typ" type="s:string" />
+    <wsdl:part name="id_TypZajezdKategorie" type="s:string" />
+    <wsdl:part name="id_Stat" type="s:string" />
+    <wsdl:part name="id_Oblast" type="s:string" />
+    <wsdl:part name="id_Stredisko" type="s:string" />
+    <wsdl:part name="LastMinute" type="s:string" />
+    <wsdl:part name="FirstMinute" type="s:string" />
+    <wsdl:part name="id_Doprava" type="s:string" />
+    <wsdl:part name="id_Letiste" type="s:string" />
+    <wsdl:part name="CenaOdMin" type="s:string" />
+    <wsdl:part name="CenaOdMax" type="s:string" />
+    <wsdl:part name="id_Mena" type="s:string" />
+    <wsdl:part name="DatumOdMin" type="s:string" />
+    <wsdl:part name="DatumDoMax" type="s:string" />
+    <wsdl:part name="id_CK" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DostupnostHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultOfDostupnostList" />
+  </wsdl:message>
+  <wsdl:message name="PocasiFlatHttpGetIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="Typ" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PocasiFlatHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultOfPocasiList" />
+  </wsdl:message>
+  <wsdl:message name="PocasiHttpGetIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="Typ" type="s:string" />
+    <wsdl:part name="ID" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="PocasiHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultOfPocasiList" />
+  </wsdl:message>
+  <wsdl:message name="HledaniMiniHttpGetIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="id_Republika" type="s:string" />
+    <wsdl:part name="Max" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HledaniMiniHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultOfZajezdVysledekList" />
+  </wsdl:message>
+  <wsdl:message name="HledaniFlatHttpGetIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="id_Republika" type="s:string" />
+    <wsdl:part name="Skip" type="s:string" />
+    <wsdl:part name="Max" type="s:string" />
+    <wsdl:part name="MaxTerminu" type="s:string" />
+    <wsdl:part name="id_TypZajezdKategorie" type="s:string" />
+    <wsdl:part name="DatumOdMin" type="s:string" />
+    <wsdl:part name="DatumDoMax" type="s:string" />
+    <wsdl:part name="DniMin" type="s:string" />
+    <wsdl:part name="DniMax" type="s:string" />
+    <wsdl:part name="LastMinute" type="s:string" />
+    <wsdl:part name="FirstMinute" type="s:string" />
+    <wsdl:part name="id_Doprava" type="s:string" />
+    <wsdl:part name="id_Letiste" type="s:string" />
+    <wsdl:part name="id_Stat" type="s:string" />
+    <wsdl:part name="id_Oblast" type="s:string" />
+    <wsdl:part name="id_Stredisko" type="s:string" />
+    <wsdl:part name="id_StravaMin" type="s:string" />
+    <wsdl:part name="id_StravaMax" type="s:string" />
+    <wsdl:part name="id_TypHotel" type="s:string" />
+    <wsdl:part name="HvezdyMin" type="s:string" />
+    <wsdl:part name="OdPlazeMax" type="s:string" />
+    <wsdl:part name="OdSjezdovkyMax" type="s:string" />
+    <wsdl:part name="OdSkibusuMax" type="s:string" />
+    <wsdl:part name="OdLetisteMax" type="s:string" />
+    <wsdl:part name="OdCentraMax" type="s:string" />
+    <wsdl:part name="CenaOdMin" type="s:string" />
+    <wsdl:part name="CenaOdMax" type="s:string" />
+    <wsdl:part name="id_Mena" type="s:string" />
+    <wsdl:part name="Text" type="s:string" />
+    <wsdl:part name="UserAgent" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HledaniFlatHttpGetOut">
+    <wsdl:part name="Body" element="tns:ResultOfZajezdVysledekList" />
+  </wsdl:message>
+  <wsdl:message name="HotTipyHttpPostIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="id_Republika" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HotTipyHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultOfTerminTipList" />
+  </wsdl:message>
+  <wsdl:message name="HotelHttpPostIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HotelHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultOfHotelPopisItem" />
+  </wsdl:message>
+  <wsdl:message name="KalkulaceFlatHttpPostIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="id_Termin" type="s:string" />
+    <wsdl:part name="Hotely" type="s:string" />
+    <wsdl:part name="id_Letiste" type="s:string" />
+    <wsdl:part name="id_TransferTrasa" type="s:string" />
+    <wsdl:part name="id_Strava" type="s:string" />
+    <wsdl:part name="Dni" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="KalkulaceFlatHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultOfKalkulaceItem" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdTerminFlatHttpPostIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+    <wsdl:part name="id_ZajezdHotel" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdTerminFlatHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultOfZajezdTerminItem" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdTerminHttpPostIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+    <wsdl:part name="id_ZajezdHotel" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdTerminHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultOfZajezdTerminItem" />
+  </wsdl:message>
+  <wsdl:message name="VyletHttpPostIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VyletHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultOfVyletPopisItem" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdHttpPostIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ZajezdHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultOfZajezdItem" />
+  </wsdl:message>
+  <wsdl:message name="DostupnostHttpPostIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="id_Republika" type="s:string" />
+    <wsdl:part name="Typ" type="s:string" />
+    <wsdl:part name="id_TypZajezdKategorie" type="s:string" />
+    <wsdl:part name="id_Stat" type="s:string" />
+    <wsdl:part name="id_Oblast" type="s:string" />
+    <wsdl:part name="id_Stredisko" type="s:string" />
+    <wsdl:part name="LastMinute" type="s:string" />
+    <wsdl:part name="FirstMinute" type="s:string" />
+    <wsdl:part name="id_Doprava" type="s:string" />
+    <wsdl:part name="id_Letiste" type="s:string" />
+    <wsdl:part name="CenaOdMin" type="s:string" />
+    <wsdl:part name="CenaOdMax" type="s:string" />
+    <wsdl:part name="id_Mena" type="s:string" />
+    <wsdl:part name="DatumOdMin" type="s:string" />
+    <wsdl:part name="DatumDoMax" type="s:string" />
+    <wsdl:part name="id_CK" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DostupnostHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultOfDostupnostList" />
+  </wsdl:message>
+  <wsdl:message name="PocasiFlatHttpPostIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="Typ" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PocasiFlatHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultOfPocasiList" />
+  </wsdl:message>
+  <wsdl:message name="PocasiHttpPostIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="Typ" type="s:string" />
+    <wsdl:part name="ID" type="s1:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="PocasiHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultOfPocasiList" />
+  </wsdl:message>
+  <wsdl:message name="HledaniMiniHttpPostIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="id_Republika" type="s:string" />
+    <wsdl:part name="Max" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HledaniMiniHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultOfZajezdVysledekList" />
+  </wsdl:message>
+  <wsdl:message name="HledaniFlatHttpPostIn">
+    <wsdl:part name="id_Organizace" type="s:string" />
+    <wsdl:part name="id_Jazyk" type="s:string" />
+    <wsdl:part name="VypsatNazvy" type="s:string" />
+    <wsdl:part name="id_Republika" type="s:string" />
+    <wsdl:part name="Skip" type="s:string" />
+    <wsdl:part name="Max" type="s:string" />
+    <wsdl:part name="MaxTerminu" type="s:string" />
+    <wsdl:part name="id_TypZajezdKategorie" type="s:string" />
+    <wsdl:part name="DatumOdMin" type="s:string" />
+    <wsdl:part name="DatumDoMax" type="s:string" />
+    <wsdl:part name="DniMin" type="s:string" />
+    <wsdl:part name="DniMax" type="s:string" />
+    <wsdl:part name="LastMinute" type="s:string" />
+    <wsdl:part name="FirstMinute" type="s:string" />
+    <wsdl:part name="id_Doprava" type="s:string" />
+    <wsdl:part name="id_Letiste" type="s:string" />
+    <wsdl:part name="id_Stat" type="s:string" />
+    <wsdl:part name="id_Oblast" type="s:string" />
+    <wsdl:part name="id_Stredisko" type="s:string" />
+    <wsdl:part name="id_StravaMin" type="s:string" />
+    <wsdl:part name="id_StravaMax" type="s:string" />
+    <wsdl:part name="id_TypHotel" type="s:string" />
+    <wsdl:part name="HvezdyMin" type="s:string" />
+    <wsdl:part name="OdPlazeMax" type="s:string" />
+    <wsdl:part name="OdSjezdovkyMax" type="s:string" />
+    <wsdl:part name="OdSkibusuMax" type="s:string" />
+    <wsdl:part name="OdLetisteMax" type="s:string" />
+    <wsdl:part name="OdCentraMax" type="s:string" />
+    <wsdl:part name="CenaOdMin" type="s:string" />
+    <wsdl:part name="CenaOdMax" type="s:string" />
+    <wsdl:part name="id_Mena" type="s:string" />
+    <wsdl:part name="Text" type="s:string" />
+    <wsdl:part name="UserAgent" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HledaniFlatHttpPostOut">
+    <wsdl:part name="Body" element="tns:ResultOfZajezdVysledekList" />
+  </wsdl:message>
+  <wsdl:portType name="ExportSoap">
+    <wsdl:operation name="HotTipy">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Seznam HotTipů pro zobrazení na hlavní straně. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_HotTipy.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HotTipySoapIn" />
+      <wsdl:output message="tns:HotTipySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Hotel">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Popis hotelu, obrázky, vybavení. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Hotel.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HotelSoapIn" />
+      <wsdl:output message="tns:HotelSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="KalkulaceFlat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Kalkulace a ceny pro konkrétní termín pro metodu HTTP GET - strukturované vstupní parametry lze zadat jako jeden string. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_KalkulaceFlat.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:KalkulaceFlatSoapIn" />
+      <wsdl:output message="tns:KalkulaceFlatSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Kalkulace">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Kalkulace a ceny pro konkrétní termín. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Kalkulace.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:KalkulaceSoapIn" />
+      <wsdl:output message="tns:KalkulaceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTerminFlat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Informace o termínu a zájezdu potřebné pro zobrazení kalkulace pro metodu HTTP GET - strukturované vstupní parametry lze zadat jako jeden string. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_ZajezdTerminFlat.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:ZajezdTerminFlatSoapIn" />
+      <wsdl:output message="tns:ZajezdTerminFlatSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTermin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Informace o termínu a zájezdu potřebné pro zobrazení kalkulace. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_ZajezdTermin.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:ZajezdTerminSoapIn" />
+      <wsdl:output message="tns:ZajezdTerminSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Vylet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Popis a obrázky výletu. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Vylet.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:VyletSoapIn" />
+      <wsdl:output message="tns:VyletSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Zajezd">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Popis zájezdu, seznam termínů a hotelů. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Zajezd.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:ZajezdSoapIn" />
+      <wsdl:output message="tns:ZajezdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Dostupnost">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Dostupné typy kategorií zájezdů, státy, oblasti nebo střediska a počet jejich zájezdů, termínů a ceny od. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Dostupnost.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:DostupnostSoapIn" />
+      <wsdl:output message="tns:DostupnostSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PocasiFlat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Počasí pro vybrané státy nebo oblasti. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Pocasi.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:PocasiFlatSoapIn" />
+      <wsdl:output message="tns:PocasiFlatSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Pocasi">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Počasí pro vybrané státy nebo oblasti. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Pocasi.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:PocasiSoapIn" />
+      <wsdl:output message="tns:PocasiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="HledaniMini">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Výsledky hledání pro zvolená kritéria pro metodu HTTP GET - strukturované vstupní parametry lze zadat jako jeden string a v URL není nutné vyjmenovávat všechny parametry. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_HledaniMini.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HledaniMiniSoapIn" />
+      <wsdl:output message="tns:HledaniMiniSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="HledaniFlat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Výsledky hledání pro zvolená kritéria pro metodu HTTP GET - strukturované vstupní parametry lze zadat jako jeden string. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_HledaniFlat.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HledaniFlatSoapIn" />
+      <wsdl:output message="tns:HledaniFlatSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Hledani">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Výsledky hledání pro zvolená kritéria. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Hledani.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HledaniSoapIn" />
+      <wsdl:output message="tns:HledaniSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="HledaniInterni">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Pouze pro interní použití</wsdl:documentation>
+      <wsdl:input message="tns:HledaniInterniSoapIn" />
+      <wsdl:output message="tns:HledaniInterniSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ExportHttpGet">
+    <wsdl:operation name="HotTipy">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Seznam HotTipů pro zobrazení na hlavní straně. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_HotTipy.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HotTipyHttpGetIn" />
+      <wsdl:output message="tns:HotTipyHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Hotel">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Popis hotelu, obrázky, vybavení. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Hotel.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HotelHttpGetIn" />
+      <wsdl:output message="tns:HotelHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="KalkulaceFlat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Kalkulace a ceny pro konkrétní termín pro metodu HTTP GET - strukturované vstupní parametry lze zadat jako jeden string. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_KalkulaceFlat.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:KalkulaceFlatHttpGetIn" />
+      <wsdl:output message="tns:KalkulaceFlatHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTerminFlat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Informace o termínu a zájezdu potřebné pro zobrazení kalkulace pro metodu HTTP GET - strukturované vstupní parametry lze zadat jako jeden string. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_ZajezdTerminFlat.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:ZajezdTerminFlatHttpGetIn" />
+      <wsdl:output message="tns:ZajezdTerminFlatHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTermin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Informace o termínu a zájezdu potřebné pro zobrazení kalkulace. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_ZajezdTermin.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:ZajezdTerminHttpGetIn" />
+      <wsdl:output message="tns:ZajezdTerminHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Vylet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Popis a obrázky výletu. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Vylet.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:VyletHttpGetIn" />
+      <wsdl:output message="tns:VyletHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Zajezd">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Popis zájezdu, seznam termínů a hotelů. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Zajezd.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:ZajezdHttpGetIn" />
+      <wsdl:output message="tns:ZajezdHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Dostupnost">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Dostupné typy kategorií zájezdů, státy, oblasti nebo střediska a počet jejich zájezdů, termínů a ceny od. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Dostupnost.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:DostupnostHttpGetIn" />
+      <wsdl:output message="tns:DostupnostHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PocasiFlat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Počasí pro vybrané státy nebo oblasti. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Pocasi.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:PocasiFlatHttpGetIn" />
+      <wsdl:output message="tns:PocasiFlatHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Pocasi">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Počasí pro vybrané státy nebo oblasti. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Pocasi.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:PocasiHttpGetIn" />
+      <wsdl:output message="tns:PocasiHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="HledaniMini">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Výsledky hledání pro zvolená kritéria pro metodu HTTP GET - strukturované vstupní parametry lze zadat jako jeden string a v URL není nutné vyjmenovávat všechny parametry. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_HledaniMini.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HledaniMiniHttpGetIn" />
+      <wsdl:output message="tns:HledaniMiniHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="HledaniFlat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Výsledky hledání pro zvolená kritéria pro metodu HTTP GET - strukturované vstupní parametry lze zadat jako jeden string. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_HledaniFlat.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HledaniFlatHttpGetIn" />
+      <wsdl:output message="tns:HledaniFlatHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ExportHttpPost">
+    <wsdl:operation name="HotTipy">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Seznam HotTipů pro zobrazení na hlavní straně. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_HotTipy.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HotTipyHttpPostIn" />
+      <wsdl:output message="tns:HotTipyHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Hotel">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Popis hotelu, obrázky, vybavení. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Hotel.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HotelHttpPostIn" />
+      <wsdl:output message="tns:HotelHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="KalkulaceFlat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Kalkulace a ceny pro konkrétní termín pro metodu HTTP GET - strukturované vstupní parametry lze zadat jako jeden string. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_KalkulaceFlat.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:KalkulaceFlatHttpPostIn" />
+      <wsdl:output message="tns:KalkulaceFlatHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTerminFlat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Informace o termínu a zájezdu potřebné pro zobrazení kalkulace pro metodu HTTP GET - strukturované vstupní parametry lze zadat jako jeden string. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_ZajezdTerminFlat.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:ZajezdTerminFlatHttpPostIn" />
+      <wsdl:output message="tns:ZajezdTerminFlatHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTermin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Informace o termínu a zájezdu potřebné pro zobrazení kalkulace. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_ZajezdTermin.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:ZajezdTerminHttpPostIn" />
+      <wsdl:output message="tns:ZajezdTerminHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Vylet">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Popis a obrázky výletu. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Vylet.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:VyletHttpPostIn" />
+      <wsdl:output message="tns:VyletHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Zajezd">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Popis zájezdu, seznam termínů a hotelů. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Zajezd.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:ZajezdHttpPostIn" />
+      <wsdl:output message="tns:ZajezdHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Dostupnost">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Dostupné typy kategorií zájezdů, státy, oblasti nebo střediska a počet jejich zájezdů, termínů a ceny od. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Dostupnost.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:DostupnostHttpPostIn" />
+      <wsdl:output message="tns:DostupnostHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PocasiFlat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Počasí pro vybrané státy nebo oblasti. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Pocasi.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:PocasiFlatHttpPostIn" />
+      <wsdl:output message="tns:PocasiFlatHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Pocasi">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Počasí pro vybrané státy nebo oblasti. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_Pocasi.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:PocasiHttpPostIn" />
+      <wsdl:output message="tns:PocasiHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="HledaniMini">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Výsledky hledání pro zvolená kritéria pro metodu HTTP GET - strukturované vstupní parametry lze zadat jako jeden string a v URL není nutné vyjmenovávat všechny parametry. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_HledaniMini.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HledaniMiniHttpPostIn" />
+      <wsdl:output message="tns:HledaniMiniHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="HledaniFlat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Výsledky hledání pro zvolená kritéria pro metodu HTTP GET - strukturované vstupní parametry lze zadat jako jeden string. &lt;a href="/Data/Dokumentace/ProfiXML/Index.aspx?topic=html/M_ProfiTour_ProfiXML_Export_HledaniFlat.htm"&gt;RTFM&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HledaniFlatHttpPostIn" />
+      <wsdl:output message="tns:HledaniFlatHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ExportSoap" type="tns:ExportSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HotTipy">
+      <soap:operation soapAction="http://xml.profitour.sk/HotTipy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Hotel">
+      <soap:operation soapAction="http://xml.profitour.sk/Hotel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KalkulaceFlat">
+      <soap:operation soapAction="http://xml.profitour.sk/KalkulaceFlat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Kalkulace">
+      <soap:operation soapAction="http://xml.profitour.sk/Kalkulace" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTerminFlat">
+      <soap:operation soapAction="http://xml.profitour.sk/ZajezdTerminFlat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTermin">
+      <soap:operation soapAction="http://xml.profitour.sk/ZajezdTermin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Vylet">
+      <soap:operation soapAction="http://xml.profitour.sk/Vylet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Zajezd">
+      <soap:operation soapAction="http://xml.profitour.sk/Zajezd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Dostupnost">
+      <soap:operation soapAction="http://xml.profitour.sk/Dostupnost" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PocasiFlat">
+      <soap:operation soapAction="http://xml.profitour.sk/PocasiFlat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Pocasi">
+      <soap:operation soapAction="http://xml.profitour.sk/Pocasi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HledaniMini">
+      <soap:operation soapAction="http://xml.profitour.sk/HledaniMini" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HledaniFlat">
+      <soap:operation soapAction="http://xml.profitour.sk/HledaniFlat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Hledani">
+      <soap:operation soapAction="http://xml.profitour.sk/Hledani" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HledaniInterni">
+      <soap:operation soapAction="http://xml.profitour.sk/HledaniInterni" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ExportSoap12" type="tns:ExportSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HotTipy">
+      <soap12:operation soapAction="http://xml.profitour.sk/HotTipy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Hotel">
+      <soap12:operation soapAction="http://xml.profitour.sk/Hotel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KalkulaceFlat">
+      <soap12:operation soapAction="http://xml.profitour.sk/KalkulaceFlat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Kalkulace">
+      <soap12:operation soapAction="http://xml.profitour.sk/Kalkulace" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTerminFlat">
+      <soap12:operation soapAction="http://xml.profitour.sk/ZajezdTerminFlat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTermin">
+      <soap12:operation soapAction="http://xml.profitour.sk/ZajezdTermin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Vylet">
+      <soap12:operation soapAction="http://xml.profitour.sk/Vylet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Zajezd">
+      <soap12:operation soapAction="http://xml.profitour.sk/Zajezd" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Dostupnost">
+      <soap12:operation soapAction="http://xml.profitour.sk/Dostupnost" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PocasiFlat">
+      <soap12:operation soapAction="http://xml.profitour.sk/PocasiFlat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Pocasi">
+      <soap12:operation soapAction="http://xml.profitour.sk/Pocasi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HledaniMini">
+      <soap12:operation soapAction="http://xml.profitour.sk/HledaniMini" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HledaniFlat">
+      <soap12:operation soapAction="http://xml.profitour.sk/HledaniFlat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Hledani">
+      <soap12:operation soapAction="http://xml.profitour.sk/Hledani" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HledaniInterni">
+      <soap12:operation soapAction="http://xml.profitour.sk/HledaniInterni" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ExportHttpGet" type="tns:ExportHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="HotTipy">
+      <http:operation location="/HotTipy" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Hotel">
+      <http:operation location="/Hotel" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KalkulaceFlat">
+      <http:operation location="/KalkulaceFlat" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTerminFlat">
+      <http:operation location="/ZajezdTerminFlat" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTermin">
+      <http:operation location="/ZajezdTermin" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Vylet">
+      <http:operation location="/Vylet" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Zajezd">
+      <http:operation location="/Zajezd" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Dostupnost">
+      <http:operation location="/Dostupnost" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PocasiFlat">
+      <http:operation location="/PocasiFlat" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Pocasi">
+      <http:operation location="/Pocasi" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HledaniMini">
+      <http:operation location="/HledaniMini" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HledaniFlat">
+      <http:operation location="/HledaniFlat" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ExportHttpPost" type="tns:ExportHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="HotTipy">
+      <http:operation location="/HotTipy" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Hotel">
+      <http:operation location="/Hotel" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KalkulaceFlat">
+      <http:operation location="/KalkulaceFlat" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTerminFlat">
+      <http:operation location="/ZajezdTerminFlat" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZajezdTermin">
+      <http:operation location="/ZajezdTermin" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Vylet">
+      <http:operation location="/Vylet" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Zajezd">
+      <http:operation location="/Zajezd" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Dostupnost">
+      <http:operation location="/Dostupnost" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PocasiFlat">
+      <http:operation location="/PocasiFlat" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Pocasi">
+      <http:operation location="/Pocasi" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HledaniMini">
+      <http:operation location="/HledaniMini" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HledaniFlat">
+      <http:operation location="/HledaniFlat" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Export">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">&lt;b&gt;Význam obecných parametrů:&lt;/b&gt;&lt;br /&gt;- &lt;b&gt;id_Organizace&lt;/b&gt; - ID, které Vám (nebo organizaci pro kterou rozhraní implementujete) bylo přiděleno při zřízení služby. Volání metod je omezeno podle IP adresy a při uvedení neplatného ID organizace, nebo přístupu z nepovolené adresy bude vrácena chyba "Access denied".&lt;br /&gt;- &lt;b&gt;id_Jazyk&lt;/b&gt; - Udává jazyk (cs/sk), který bude použit pro překlad ID na názvy z číselníků při použití parametru VypsatNazvy=True.&lt;br /&gt;- &lt;b&gt;VypsatNazvy&lt;/b&gt; - Při nastavení na True bude ke všem hodnotám id_NazevCiselniku přidán atribut str_NazevCiselniku, který bude obsahovat textový název pro konkrétní ID podle zvoleného id_Jazyk.</wsdl:documentation>
+    <wsdl:port name="ExportSoap" binding="tns:ExportSoap">
+      <soap:address location="http://xml.profitour.sk/Export.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ExportSoap12" binding="tns:ExportSoap12">
+      <soap12:address location="http://xml.profitour.sk/Export.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ExportHttpGet" binding="tns:ExportHttpGet">
+      <http:address location="http://xml.profitour.sk/Export.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ExportHttpPost" binding="tns:ExportHttpPost">
+      <http:address location="http://xml.profitour.sk/Export.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

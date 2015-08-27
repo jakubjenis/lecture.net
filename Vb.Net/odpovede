@@ -1,0 +1,188 @@
+.NET vs The World
+
+	Co je .NET?	- je to behove prostredie od Microsoft pre tvorbu konzolovych aplikacii
+	
+	Rodiel medzi VB6 kompilaciou a .NET Just in time kompilaciou? - .NET je nova platforma .NET Framework od MS
+		Medzipreklad do MSILu (CILu)
+		Vyhody/Nevyhody
+		
+Comu sa .NET s ostatnych plaforiem podoba? - myslim ze nicomu
+	
+Cim sa .NET lisi spravou pamati? - vyuziva zasobnik a haldu(hodnotove a referencne typy)
+Co je GarbageCollector? - myslim ze je to sprava pamate
+Co je to Assembly? - je to nieco ako ze poviem pocitacu co ma robit
+Co je to Aplikacna domena? - neviem
+Naco sluzi Application Manifest? - viem ze ju obsahuje Assembly v CLR
+
+Aky je rozdiel medzi vlaknom a procesom? - vlakno bezi a moze sa zastavit kdezto proces bezi pokial ho nezastavi izivatel
+Aky ma vyznam programovat viacvlaknovo (paralalne)? - ze sa mi bude na jednom PC vykonavat na sebe viacero procesov
+Ide (ak, tak ako) v .NETe programovat paralelne? - ide Threeding, pomocou vlakien
+
+Co je to WinForms? - jedna sa o windowsovu aplikaciu
+Co je, na co sluzi WPF? - vyssi uroven s grafickym royhranim nieco ako OpenGL
+Co je XAML? Je XAML nieco ako XML?
+Co je, s cim suvisi ADO.NET? - sluzi na pisanie aplikacii na web (na stane klienta)
+
+Cielom tejto casti je pochopit, co je to .NET, co vsetko pod tento pojem spada,
+Co nove prinasa a ake vyhody a nevyhody prinasa oproti inym platformam.
+Rovnako by sa mal posluchac zoznamit s technologiami suvisiacimi s frameworkom,akym sposobom a v akych scenaroch ich pouzit.
+
+GENERAL PROGRAMMING
+	
+Co su triedy? - sluzi na vytvaranie novych objektov
+Co su objekty? - je instancia triedy, je typicky pre OOP
+Co je member? Co je shared member? z anglictiny "clen"
+	
+Rozdiel public vs protected vs private (vsgoo friend) - PUBLIC = verejna(viditelna), PRIVATE = privatna(viditelna iba v ramci triedy), PROTECTED=(viditelna triedam a ich dedicom)
+	
+Co to su referencne a hodnotove typy? - hodnotove su ulozene v pamati a referencne su iba odkazi na ulozene v zasobniku
+Aky je rozdiel medzi inicializaciou a alokaciou v pamati referencnych a hodnotovych typov? - hodnotovy typ si vyhradi presne miesto pamate podla datoveho typu ale referencny typ si vyhradi nejake miesto a iba odkazuje na haldu
+	
+Klucove slova ByVal vs ByRef - ByVAL hodnotovy typ, ByREF referencny typ
+Vie hodnotovy typ predat referenciou? Viem referencny typ predat hodnotou? ;) nie, ano
+	
+Vysvelit pojmy Structure, Enumeration, Nullable, Class, Array, Delegate? Su to hodnotove, alebo referencne typy? - myslim ze ani jedno, su to datove typy
+Ake su rozdiely medzi Class a Structure? Structure - nieco ako Class ale nemoze dedit, Nullable - neviem, Class - trieda(na vytvaranie objektov, moze dedit), Array - pole, Delgate - delgat(je to vlastne nova trieda odvodena od zakladnej triedy)
+	
+Akym sposobom vieme definovat viacrozmerne polia? - napr Dim pole(2, 5)as String
+	
+Co je konstruktor? Poskytuje trieda nieco ako default konstruktor? Co v pripade ze pridavam overloady konstruktoru? - ak ho nevytvorime tak ano, je defaultny, konstruktor je volany pri vytvarani instancie. Overload sluzi napr na vypis, prepisanie povodnych defaultnych hodnot v kontruktore
+Co je inheritance (dedicnost)? Na co to vobec je? Prinasa tento koncept jazyku nieco naviac? - je to dobra vec aby som nemusel pre potomka pisat celu novu tiedu ale aby napr. mal vlastnoti od povodnej triedy + nieco navieac pripadne nieco zmenene
+	
+Co su funkcie? - vracia hodnotu napr. Integer, double
+Aky je rozdiel medzi Function a Sub? - je to metoda, nic nevracia
+	
+Aky je rozdiel medzi overridable a obycajnou funkciou? - je prepisovatelna napr na vypis hodnot ktore zada uyivatel aby sa prepisali prednastavene hodnoty
+Vysvetli klucove slova Overrides, Overridable, Overloads, NonOverridable, Shadows, NonInheritable, MustInherit – Overrides(prepisovatelna metoda, funkcia), Shadows – bude pravdepodobne skryta, NonInheritable – je ze od nej nemoze trieda dedit, MustInherit – musi dedit od triedy
+Co su, naco sluzia Genericke typy? Pridava nieco jazyku generickost? - neviem
+	
+Kolekcie vs genericke kolekcie – vyhody - neviem
+Rozdiel medzi List, SortedList, Array, SortedSet, HashSet, Dictionary - List je podobne polu, kde sa uchovavaju hodnoty a jej obsah sa moye svacsovat ya behu, pri deklaracii je potrebne definovat typ, SortedList – je ako list len su hodnoty zoradene, Array – je pole, je mozne pridavat za behu a bez udania datoveho typu, SortedSet – neviem, HashSet – neviem, Dictionary – je predsa objekt adresar, nie?
+porovnanie rychlosti, implementacie, use cases
+	
+Me, MyClass, MyBase
+	
+Co to je a naco sluzi interface?  - je to rozhranie pre zjednodusenie kodu, pripadne aby som si mohol rozhranie upravit podla vlastnych potrieb
+Predstavenie IEnumerable, IDisposable, IComparable, ISerializable – vsetko by tzo mali byt kolekcie na zoradovanie, ale ich presny rozdiel neviem
+	
+Co to je implicitne vs explicitne pretypovanie? - neviem
+Rozdiely CType vs DirectCast – CType je pretypovanie, myslim len ze Ctype dokze pretypovat aj dlhe typy ako long
+	
+Co je to delegat? – je vlastne sledovanie udalosti AddHadler
+	Co su eventy? Ako vznikaju? Viem (a ako) v .NETe vytvarat vlastne eventy? – su to udalosti, vytvarami ich bud my alebo uz su predpripravene .NET ako pri stalceni na tlacidlo Button.Click
+Vytvorenie (Public Event StojiAleboIde)
+
+Akym mechanizmom viem eventy odchytavat a osetrovat? – pomocou breakePointu alebo pomocoiú ich volania EventHandler
+	
+Rozdiel medzi Handles a AddHandler – Handles sa pise do obsluhy udalosti(co sa vykona po zmene stavu), AddHandler – je samotna kontrola ci doslo k zmene stavu
+	
+Co su vynimky? Na co sluzia? Ako sa osetruju? Ako sa vytvaraju vlastne? zapisuju sa v zneni Try Catch.....do casti Try sa zapisuju prikazy co sa maju vykonat a to catch sa zachytavaju vynimky a co sa ma urobit ak k nim pride.
+	
+Syntactic sugar:
+Vysvetli klucove slova With, Using. V akych scenaroch je vhodne ich pouzit? – neviem s tym este robit ale videl som to....je to akesi ulahcenie co bolo este v VB6 aby sa nemuseleo stavel opakovat napr. Button1.Size, Button1.Location...tak sa napise With Button1 a potom sa uz len pise.Location atd.
+	
+Co su extension metody? - neviem
+	
+Co znamena, ze trida String je Immutable? Naco to je dobre? Ako to obist? – nemam sajnu
+	
+	Prebrane klucove slova:
+	Structure, Enumeration, Nullable, Class, Array, Delegate
+	Public, Protected, Private, Friend
+	Property, Dim, Static, Shared
+	Function, Sub, return
+	If, If(), Select case, For, For each, While, Do While, break, With, Using
+	Delegate, Event
+	
+Dalsie temy, ktore sa budu preberat podrobnejsie:
+
+WinForms
+	dolezite Controls
+	praca s grafickym navrhom
+	tvorba vlastnych Controls
+	event handling
+	
+	winForms vs WPF
+	
+ADO.NET framework
+	dolezite interfaci
+	praca s frameworkom od vytvorenia az po ukoncenie spojenia :)
+	
+LINQ
+	ulahcujeme si zivot
+	
+praca s XML
+
+OBJEKTOVY NAVRH
+--> Vytvorte kolekciu tried (tak 4-6) ktore budu reprezentovat strukturu skolenia. Mala by obsahovat triedy ako Clovek, Skolitel, Skoleny, Kurz, Termin. 
+	Mal by vystihovat vazby ako "Skolitel skoli tieto kurzy", "Kurz ma tieto terminy". Vytvorte metodu AbsolvujSkolenie(int cena), ktora bude dostupna u objektu Skolitel aj Skoleny. Do navrhu pridajte par zmysluplnych properties, metod a kolekcii.
+	Priklad ma demonstrovat spravny objektovy navrh nejakej modelovanej reality, ilustraciu abstraktnych tried, interfacov a hlavne virtualnych metod pri prepisovani spravania metody
+
+KOLEKCIE
+--> Vytvor "benchmark", ktory ukaze, ktore operacie su najrychlejsie na ktorych kolekciach. Vkladanie, pristup k prvku na zaklade indexu, 
+vyhladanie prvku.
+
+IENUMERABLE
+--> Vytvorte triedu, ktora bude reprezentovat nejaky iterovatelny list, bude implementovat interface IEnumerable, tj. bude ju mozne prechadzat pomocou For each
+--> Dalej bude obsahovat default property, tj. k prvkom bude mozne pristupovat ako nazevInstance(index as int)
+
+PRACA SO SUBORMI
+--> Vytvorte konzolovu aplikaciu, ktora spocita pocet slov v textovom subore. Nazov suboru zoberie ako parameter. 
+	Kladte doraz na osetrenie neexistujucich suborov a inych chyb, ktore mozu nastat.
+--> Rozsirte program tak, aby ako parameter zobral nazov adresara. Spocita pocty slov vo vsetkych suboroch daneho adresara (len s priponou .txt)
+	a vysledky ulozi do suboru wc.txt vo forme NazovSuboru.txt ... pocetSlov
+	
+XML
+--> Vyskusajte si pracu s XML formatom. Vytvorte XML subor modelujuci nejaku realitu (telefonny zoznam, kucharska kniha, vysledky zapasov).
+	Vytvorte aplikaciu, ktora nacita tento XML subor, vypise jednotlive prvky v nejakej prehladnej forme, a umozni urcitu cast tychto dat modifikovat.
+	Vsetky zmeny sa po ulozeni prejavia v XML subore.
+	
+WINPROC
+--> Vytvorte funkciu, ktora sa spusti, ak uzivatel stlaci Ctrl+S (pripadne inu skratku)
+
+WINFORMS
+--> Pomocou WinForms vytvorte jednoduchu verziu hry Miny - vo forme budu v mriezke rozmiestnene tlacitka
+	pri spusteni si v nejakej rozumnej datovej strukture vygenerujem zoznam min
+	ak v aplikacii kliknem na tlacitko s minou, zobrazi sa hlaska "Prehrali ste", ak nie, nestane sa nic
+	Aplikaciu navrhnite tak, aby sme pocet min a rozmery hracej plochy vedeli velmi jednoducho zmenit
+--> K aplikacii Miny pridajte subor config.xml, ktory bude obsahovat pocet min a rozmery hracej plochy. Aplikacie si tieto parametre nacita.
+
+WEB CRAWLER
+--> naprogamujte vlastny webCrawler
+	program bude vyhladavat emailove adresy na internete. Prehladavanie zacne na nami zadanej stranke, skusi vyhladat emailove adresy, tie ktore najde ulozi. Dalej skusi vyhladat akekolvek odkazy, ak najde tak pokracuje v prehladavani na nich.
+--> Skuste program rozsirit tak, aby naozaj fungoval dobre. Tj -> pamata si, kde uz bol, aby nechodil na rovnaku stranku dvakrat, emaily si uklada (niekam) priebezne, aby s pripade chyby nestratil data. Program by mal zvladnut stav, ked nenajde mu server na danej URL nevrati ziadne data atd...
+--> V idealnom pripade by takyto program malo stavit spustit raz a nam by sa databaza mala plnit emailami, vhodnymi pre spamovanie rozneho druhu :)
+
+SERVER/CLIENT
+--> naprogramojte vlastny web server
+	Vytvorte dve aplikacie. Jedna z nich bude predstavovat server, bude pocuvat na vhodnom neobsadenom porte. Druha predstavuje klienta. Klient sa po spusteni pripoji na pocuvaci port, a moze so serverom komunikovat. Staci, ak napriklad moze serveru poslat spravu ("Ahoj") a ten mu vrati napriklad pocet slov v danej sprave
+--> Rozsirte aplikaciu nasledovne. Server bude uzivatelovi vracat data z databazy (nie relacnej, staci napriklad list nejakych objektov). Klient bude moct posielat ID objektu, a server mu vrati jeho Popis (pripadne iny zmysluplny scenar)
+--> Rozsirte aplikaciu tak, aby bol server schopny obsluzit viacerych klientov :)
+
+WINFORMS + ADO.NET
+--> Vytvorte databazovu aplikaciu typu klient/server. V databazi vytvorte tabulku Uzivatel(ID, Login, Heslo, Meno, Priezvisko). Aplikacia po spusteni ponukne uzivatelovi login screen (textboxy Login + Heslo, tlacitko prihlasit). Ak sa uzivatel prihlasi pod svojim menom, vyskoci mu hlavne okno aplikacie, na ktorom sa objavi hlaska, "Vitajte + meno + priezvisko". Uspesne prihlasenie sa overuje pripojenim do DB, a porovnanie zadaneho hesla s ulozenym heslom
+--> Aplikaciu rozsirte o tabulku Objednavky(ID, id_Uzivatel, Cena, Popis, Pocet). Po prihlaseni sa uzivatelovi pomocou vhodneho user controlu zobrazia VSETKY objednavky z databazi. Formular bude obsahovat checkbox "Iba moje", ktory umozni vyfiltrovat iba tie objednavky, u ktorych id_Uzivatel=id_PrihlasenyUzivatel
+--> Rozsirte aplikaciu tak, aby objednavky, ktore maju pocet=0 boli zobrazene cervenou
+--> Rozsirte aplikaciu tak, aby po kliknuti na riadok s objednavkou sa otvoril formular, ktory bude obsahovat detail objednavky
+--> Rozsirte aplikaciu tak, aby sa akekolvek zmeny v aplikacii prejavili v databazi
+
+REGISTRE
+--> skuste niektoru vytvorenu aplikaciu obohatit o zapis do registrov Windows. Co zmysluplne by do nich slo zapisat?
+
+
+Po dokonceni kurzu by mal mat ucastnik dost konkrentu predstavu akym sposobom a s vyuzitim akych technologii by uvedene problemy riesil.
+Problemy, ktore budu posluchaca najviac zaujimat, budu na kurze preberane a riesene.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
