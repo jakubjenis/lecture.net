@@ -1,0 +1,101 @@
+﻿<Activity mc:Ignorable="sads sap sap2010" x:Class="Workflow.Library.Activity" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:local="clr-namespace:Workflow.Library.WorkflowService.Activities"
+ xmlns:local1="clr-namespace:Workflow.Library.WorkflowService"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:p="http://schemas.microsoft.com/netfx/2009/xaml/servicemodel"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:sc="clr-namespace:System.ComponentModel;assembly=System"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:srs="clr-namespace:System.Runtime.Serialization;assembly=System.Runtime.Serialization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Text</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence>
+    <Sequence.Variables>
+      <Variable x:TypeArguments="local1:Person[]" Name="Data" />
+    </Sequence.Variables>
+    <local:GetData mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+      <local:GetData.GetDataResult>
+        <OutArgument x:TypeArguments="local1:Person[]">
+          <mca:CSharpReference x:TypeArguments="local1:Person[]">Data</mca:CSharpReference>
+        </OutArgument>
+      </local:GetData.GetDataResult>
+      <sap2010:WorkflowViewState.IdRef>GetData_1</sap2010:WorkflowViewState.IdRef>
+    </local:GetData>
+    <If>
+      <If.Condition>
+        <InArgument x:TypeArguments="x:Boolean">
+          <mca:CSharpValue x:TypeArguments="x:Boolean">Data.Count() &gt; 0</mca:CSharpValue>
+        </InArgument>
+      </If.Condition>
+      <If.Then>
+        <ForEach x:TypeArguments="local1:Person" DisplayName="ForEach&lt;Person&gt;">
+          <ForEach.Values>
+            <InArgument x:TypeArguments="scg:IEnumerable(local1:Person)">
+              <mca:CSharpValue x:TypeArguments="scg:IEnumerable(local1:Person)">Data</mca:CSharpValue>
+            </InArgument>
+          </ForEach.Values>
+          <ActivityAction x:TypeArguments="local1:Person">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="local1:Person" Name="Person" />
+            </ActivityAction.Argument>
+            <WriteLine>
+              <InArgument x:TypeArguments="x:String">
+                <mca:CSharpValue x:TypeArguments="x:String">Person.Name</mca:CSharpValue>
+              </InArgument>
+              <sap2010:WorkflowViewState.IdRef>WriteLine_1</sap2010:WorkflowViewState.IdRef>
+            </WriteLine>
+          </ActivityAction>
+          <sap2010:WorkflowViewState.IdRef>ForEach`1_1</sap2010:WorkflowViewState.IdRef>
+        </ForEach>
+      </If.Then>
+      <If.Else>
+        <WriteLine Text="Empty list" sap2010:WorkflowViewState.IdRef="WriteLine_2" />
+      </If.Else>
+      <sap2010:WorkflowViewState.IdRef>If_1</sap2010:WorkflowViewState.IdRef>
+    </If>
+    <sap2010:WorkflowViewState.IdRef>Sequence_1</sap2010:WorkflowViewState.IdRef>
+    <sads:DebugSymbol.Symbol>d0NEOlxEYXRhXFByb2plY3RzXENOXFdvcmtmbG93LkxpYnJhcnlcV29ya2Zsb3cuTGlicmFyeVxBY3Rpdml0eS54YW1sCyQDUg4CAQEoBS8VAgEOMAVPCgIBAisLK1wCAQ8zCzNdAgEDNwlJEwIBB0wJTFYCAQU6DzpnAgEMQQ1GGQIBCEwZTCUCAQZDEUNaAgEJ</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.IdRef>Workflow.Library.Activity_1</sap2010:WorkflowViewState.IdRef>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="GetData_1" sap:VirtualizedContainerService.HintSize="523,22" />
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="211,62" />
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="287,212" />
+      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="211,62" />
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="523,362" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="545,548">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Workflow.Library.Activity_1" sap:VirtualizedContainerService.HintSize="585,628" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>

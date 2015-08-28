@@ -1,0 +1,12 @@
+﻿@using Smart.Extenders
+@{
+    TemplateHelper.RemoveModelFromVisitedObjects(ViewData);
+    var template = ViewData["Template"] as string;
+    var isRequired = ViewData.ModelMetadata.IsRequired;
+}
+
+<div class="field edit @(isRequired ? "req" : String.Empty)">
+    @Html.Label("")
+    @Html.Editor("", template)
+    @Html.ValidationMessage("")
+</div>

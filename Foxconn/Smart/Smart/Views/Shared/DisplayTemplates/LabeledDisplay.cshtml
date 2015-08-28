@@ -1,0 +1,9 @@
+﻿@using Smart.Extenders
+@{
+    TemplateHelper.RemoveModelFromVisitedObjects(ViewData);
+    var template = ViewData["Template"] as string;
+}
+<div class="field">
+    <span class="label">@Html.DisplayNameForModel()</span>
+    @Html.Display("", template)
+</div>

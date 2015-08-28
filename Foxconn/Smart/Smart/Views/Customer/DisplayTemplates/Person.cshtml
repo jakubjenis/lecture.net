@@ -1,0 +1,8 @@
+﻿@using Smart.Extenders
+@model Smart.Models.Person
+@{
+    TemplateHelper.RemoveModelFromVisitedObjects(ViewData);
+}
+@Html.FieldSetDisplayFor(o => o.Address)
+@Html.FieldSetDisplayFor(o => o.Employment)
+@Html.FieldSet(Html.DisplayFor(o => o, "Object"), "Other data")

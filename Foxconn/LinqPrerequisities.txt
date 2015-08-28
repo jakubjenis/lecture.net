@@ -1,0 +1,84 @@
+LINQ PREREQUISITIES
+
+1) VAR
+	var number = 5;
+	var name = "Virginia";
+	
+2) OBJECT INITIALIZERS
+	Customer cust = new Customer { Name = "Mike", Phone = "555-1212" };
+	
+3) ANONYMOUS TYPE
+	Anonymous types contain one or more public read-only properties
+	var student = new { Name="a", Age = 10d };
+
+4) EXTENSION METHODS
+	The standard query operators are a set of extension methods that provide LINQ query functionality for any type that implements IEnumerable<T>.
+
+5) GENERICS
+
+   ######## EXCERCISES ########
+   public static IList<T> GetValues<T>()
+	{
+		return Enum.GetValues(typeof (T)).Cast<T>().ToList();
+	}
+	
+	CornicheServiceRepository HandleError();
+	
+	IRepository
+	
+6) COLLECTIONS
+
+	Comparison
+	http://geekswithblogs.net/BlackRabbitCoder/archive/2011/06/16/c.net-fundamentals-choosing-the-right-collection-class.aspx
+	
+	####### EXCERCISES #########
+	show samples + possible benchmark
+		
+7)  DELEGATES
+		The delegate keyword helps us make method objects.
+		Treat methods as data
+
+		delegate void D(string value);
+		D myDelegate = new MyDelegate(methodName);
+
+	ANONYMOUS METHODS
+
+		In versions of C# before 2.0, the only way to declare a delegate was to use named methods. C# 2.0 introduced anonymous methods and in C# 3.0 and later, lambda expressions supersede anonymous methods as the preferred way to write inline code. 
+
+		// Create a delegate. 
+		delegate void Del(int x);
+
+		// Instantiate the delegate using an anonymous method.
+		Del d = delegate(int k) { /* ... */ };
+
+		
+	LAMBDAS
+	
+		A lambda expression is an anonymous function that you can use to create delegates or expression tree types
+		
+		A lambda expression is an inline function that uses the => operator to separate input parameters from the function body and can be converted at compile time to a delegate or an expression tree. In LINQ programming, you will encounter lambda expressions when you make direct method calls to the standard query operators.
+
+	DELEGATES
+
+		delegate int del(int i);
+		static void Main(string[] args)
+		{
+			del myDelegate = x => x * x;
+			int j = myDelegate(5); //j = 25
+		}
+
+		Expression<del> myET = x => x * x;
+
+		Expression lambdas x => x + 1
+		Statement lamdbas x => { return x + 1; }, cannot be converted to expression trees
+
+		Func - public delegate TResult Func<in T, out TResult>(T arg)
+			Action - public delegate void Action<in T1, in T2>(T1 arg1, T2 arg2)
+		Predicate
+		Func vs Expr<Func>
+
+		Type inference
+		The lambda must contain the same number of parameters as the delegate type.
+		Each input parameter in the lambda must be implicitly convertible to its corresponding delegate parameter.
+		The return value of the lambda (if any) must be implicitly convertible to the delegate's return type
+

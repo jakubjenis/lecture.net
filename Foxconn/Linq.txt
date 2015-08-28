@@ -1,0 +1,139 @@
+1) Get DataSource
+ LINQ data source is any object that supports the generic IEnumerable<T> interface, or an interface that inherits from it.
+ 
+ XElement
+ DbSet
+ List, Array
+
+2) Query
+from, where and select - unlike SQL (select from where)
+
+	Types
+		LINQ query variables are typed as IEnumerable<T> or a derived type such as IQueryable<T>. When you see a query variable that is typed as IEnumerable<Customer>, it just means that the query, when it is executed, will produce a sequence of zero or more Customer objects.
+
+3) Execution
+Deffered execution
+	http://weblogs.asp.net/dixin/understanding-linq-to-objects-6-deferred-execution
+	http://blogs.msdn.com/b/charlie/archive/2007/12/09/deferred-execution.aspx
+
+	Force immediate execution
+		Count, Max, Average, and First
+		ToList, ToArray
+
+	IEnumerable vs IQueryable
+	http://stackoverflow.com/questions/2876616/returning-ienumerablet-vs-iqueryablet	
+	
+QUERIES
+
+//queryAllCustomers is an IEnumerable<Customer>
+var queryAllCustomers = from cust in customers
+                        select cust;
+
+	WHERE
+		var queryLondonCustomers = from cust in customers
+                           where cust.City == "London"
+                           select cust;
+						   
+		where cust.City=="London" && cust.Name == "Devon"
+		where cust.City == "London" || cust.City == "Paris"
+		
+	ORDER BY
+		var queryLondonCustomers3 = 
+			from cust in customers
+			where cust.City == "London"
+			orderby cust.Name ascending
+			select cust;
+		
+		var queryLondonCustomers3 = 
+			from cust in customers
+			where cust.City == "London"
+			orderby cust.Name descending
+			select cust;
+			
+	GROUP BY
+		// queryCustomersByCity is an IEnumerable<IGrouping<string, Customer>>
+		var queryCustomersByCity =
+		  from cust in customers
+		  group cust by cust.City;
+
+		// customerGroup is an IGrouping<string, Customer>
+		foreach (var customerGroup in queryCustomersByCity)
+		{
+		  Console.WriteLine(customerGroup.Key);
+		  foreach (Customer customer in customerGroup)
+		  {
+			  Console.WriteLine("    {0}", customer.Name);
+		  }
+		}
+		
+		// custQuery is an IEnumerable<IGrouping<string, Customer>>
+		var custQuery =
+			from cust in customers
+			group cust by cust.City INTO custGroup
+			where custGroup.Count() > 2
+			orderby custGroup.Key
+			select custGroup;
+			
+	JOIN
+		always against objects in memory - use properties when possible
+	
+		var innerJoinQuery =
+			from cust in customers
+			join dist in distributors on cust.City equals dist.City
+			select new { CustomerName = cust.Name, DistributorName = dist.Name };
+
+	SELECT
+		Merge multiple input sequences into a single output sequence that has a new type.
+		Create output sequences whose elements consist of only one or several properties of each element in the source sequence.
+		Create output sequences whose elements consist of the results of operations performed on the source data.
+		Create output sequences in a different format. For example, you can transform data from SQL rows or text files into XML.
+		
+		Expression returning property
+		var query = from cust in Customers
+            select cust.City;
+
+		Object initializer + anonymous type
+		var query = from cust in Customer
+            select new {Name = cust.Name, City = cust.City};
+	
+		Object initializer + type
+			Type relashionships
+			http://msdn.microsoft.com/cs-cz/library/bb397924.aspx
+		
+		XML
+			// Create the data source by using a collection initializer.
+			// The Student class was defined previously in this topic.
+			List<Student> students = new List<Student>()
+			{
+				new Student {First="Svetlana", Last="Omelchenko", ID=111, Scores = new List<int>{97, 92, 81, 60}},
+				new Student {First="Claire", Last="O’Donnell", ID=112, Scores = new List<int>{75, 84, 91, 39}},
+				new Student {First="Sven", Last="Mortensen", ID=113, Scores = new List<int>{88, 94, 65, 91}},
+			};
+
+			// Create the query.
+			var studentsToXML = new XElement("Root",
+				from student in students
+				let x = String.Format("{0},{1},{2},{3}", student.Scores[0],
+						student.Scores[1], student.Scores[2], student.Scores[3])
+				select new XElement("student",
+						   new XElement("First", student.First),
+						   new XElement("Last", student.Last),
+						   new XElement("Scores", x)
+						) // end "student"
+					); // end "Root"
+
+			// Execute the query.
+			Console.WriteLine(studentsToXML);
+		
+		Function calls
+			 // Data source.
+			double[] radii = { 1, 2, 3 };
+
+			// Query.
+			IEnumerable<string> query =
+				from rad in radii
+				select String.Format("Area = {0}", (rad * rad) * 3.14);
+				
+			Calling methods in query expressions is not supported if the query will be translated into some other domain. For example, you cannot call an ordinary C# method in LINQ to SQL because SQL Server has no context for it. However, you can map stored procedures to methods and call those. For more information, see Stored Procedures [LINQ to SQL].
+			
+

@@ -1,0 +1,13 @@
+﻿@using Smart.Extenders
+@model Smart.Models.Contract
+@{
+    TemplateHelper.RemoveModelFromVisitedObjects(ViewData);
+}
+<div class="col2 left">
+    @Html.FieldSetDisplayFor(o => o.Buyer)
+</div>
+<div class="col2">
+    @Html.FieldSetDisplayFor(o => o.Seller)
+</div>
+<div class="clearfix"></div>
+@Html.FieldSet(Html.DisplayFor(o => o, "Object"), "Other data")

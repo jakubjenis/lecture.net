@@ -1,0 +1,7 @@
+first check Reference object -> if not null -> ok
+then check Foreign key column -> if not 0 -> ok
+otherwise -> Required constraint violated
+
+
+Foreign key columns solve problem  with connected objects being null when saving without including everything...
+since FKs are loaded, it is ok to save the object without including (lazyloading) everything

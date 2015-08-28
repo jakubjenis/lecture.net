@@ -1,0 +1,166 @@
+############### Excercises #################
+
+use DataReader to print table to Console
+	SqlInjection 
+		"select * from Teacher where FirstName='" + text + "'";
+		Jakub'; Delete from Teacher where FirstName=Jakub; --
+	Ado library
+	Connections, Commands, Parameters, StoredProcedures
+	
+use DataReader to fill DataTable
+use DataAdapter to fill DataTable
+use DataAdapter to update DB from DataTable
+use DataSet instead of DataTable
+
+connect DataGridView to DataTable --Todo
+use DataSource to populate DataGridView (Database datasource)
+
+############### ADO.NET ###################
+
+bias toward disconnected model
+connection pooling 
+create connection 100ms
+
+data providers are described as “components that have
+been explicitly designed for data manipulation and fast, forward-only, read-only access to
+data
+
+DataAdapter
+	Used in conjunction with a Connection
+	and Command object to populate a
+	DataSet or an individual DataTable, and
+	can also be used to make modifications
+	back to the database. Changes can be
+	batched so that updates avoid unnecessary
+	roundtrips to the database.
+
+DataReader
+	Ideally suited to scenarios in which speed
+	is the most critical aspect because of its
+	forward-only nature, similar to a Stream.
+	This provides read-only access to the data.
+
+DataSet
+	In-memory copy of the RDBMS or portion
+	of RDBMS relevant to the application. This
+	is a collection of DataTable objects, their
+	relationships to one another, and other
+	metadata about the database and commands
+	to interact with it.
+
+DataTable
+	Corresponds to a specific view of data,
+	whether from a SELECT query or generated
+	from .NET code. This is often analogous to
+	a table in the RDBMS, although only partially
+	populated. It tracks the state of data
+	stored in it so, when data is modified, you
+	can tell which records need to be saved
+	back into the database.
+
+DataReader vs DataSet
+
+	Every SELECT query operation you employ in ADO.NET uses a DataReader
+
+	The Fill method of the DataAdapter completes only when all the data has been retrieved
+	and added to the DataSet or DataTable. This enables you to immediately determine
+	the number of records in any given table. By contrast, a DataReader can indicate
+	whether data was returned (via the HasRows property), but the only way to know the
+	exact record count returned from a DataReader is to iterate through it and count it out
+	specifically.
+
+	You can iterate through a DataReader only once and can iterate through it only in a
+	forward-only fashion. You can iterate through a DataTable any number of times in any
+	manner you see fit.
+	
+	DataSets can be loaded directly from XML documents and can be persisted to XML
+	natively. They are consequently inherently serializable, which affords many features
+	not natively available to DataReaders (for instance, you can easily store a DataSet or
+	a DataTable in Session or View State, but you can’t do the same with a DataReader).
+
+	If your DataTable maps to or is generated from a single database table, you can take advantage 
+	of the DbCommandBuilder object to automatically generate the DeleteCommand, InsertCommand, and UpdateCommand of the DbDataAdapter.
+	
+	The SelectCommand must also return at least one primary key or unique column. If none are present, an InvalidOperation exception is generated, and the commands are not generated.
+	
+	The DbCommandBuilder must execute the SelectCommand in order to return the metadata necessary to construct the INSERT, UPDATE, and DELETE SQL commands. As a result, an extra trip to the data source is necessary, and this can hinder performance. To achieve optimal performance, specify your commands explicitly rather than using the DbCommandBuilder.
+
+	The logic for generating commands automatically for UPDATE and DELETE statements is based on optimistic concurrency--that is, records are not locked for editing and can be modified by other users or processes at any time. Because a record could have been modified after it was returned from the SELECT statement, but before the UPDATE or DELETE statement is issued, the automatically generated UPDATE or DELETE statement contains a WHERE clause, specifying that a row is only updated if it contains all original values and has not been deleted from the data source. This is done to avoid overwriting new data. Where an automatically generated update attempts to update a row that has been deleted or that does not contain the original values found in the DataSet, the command does not affect any records, and a DBConcurrencyException is thrown.
+	
+	If you are using SQL Server stored procedures to edit or delete data using a DataAdapter, make sure that you do not use SET NOCOUNT ON in the stored procedure definition. This causes the rows affected count returned to be zero, which the DataAdapter interprets as a concurrency conflict. In this event, a DBConcurrencyException will be thrown.
+	
+	The following data sources are valid:
+		A DataTable
+		A DataView
+		A DataSet
+		A DataViewManager
+		Any component that implements the IListSource interface
+		Any component that implements the IList interface
+	
+Connection
+Command
+Execute
+
+System.Data.SqlClient
+System.Data.OracleClient
+System.Data.OleDb -> Excel
+
+Provider specific:
+Connection
+Command
+DataReader
+DataAdapter
+
+For all providers - System.Data:
+DataSet
+
+look at dispose (Command, DbContext)
+
+1) Connection creation in using
+2) Factory for connection
+3) Connection string in Web.Config
+4) Web.Config transformation
+5) Command different executes
+6) SqlInjection
+
+"Select * From Products where Name like '" + Textbox.Text "%'";
+ip'; Delete from Product --
+
+7) SqlParameter //Todo: values -> object?
+uses sp_executesql + parameters as store procedure parameters
+8) Stored procedures
+9) Output parameters - Return, In, Out
+10) SqlDataReader
+most efficient for reading
+readonly forwardonly
+connection oriented - active connection
+internal constructor
+must be in using statement
+
+while(reader.Read())
+NextResult
+
+11) SqlDataAdapter + DataSet
+disconnected data access
+DataAdapter.Fill - opens connection, reads data, fills dataset, closes connection
+
+SelectCommand - SP / direct + parameters + type
+
+12) SqlCommandBuilder
+Create dataAdapter + set selectCommand
+CreateCommandBuilder + set dataAdapter
+DataAdapter.Update()
+
+select need to contain identity/unique column
+
+GetInsertCommand()
+GetUpdateCommand()
+GetDeleteCommand()
+
+what if I have two tables in select?????
+
+13) AcceptChanges, RejectChanges
+14) DataRow - state, DataRowVersion
+
+12)DataSet
+inmemory representation of database

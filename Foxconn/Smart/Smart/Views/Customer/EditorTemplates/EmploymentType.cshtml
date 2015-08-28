@@ -1,0 +1,15 @@
+﻿
+@using Smart.Models
+@model Smart.Models.EmploymentType
+           
+@{
+    var items = Enum.GetValues(typeof (EmploymentType))
+        .Cast<EmploymentType>()
+        .Select(p => new SelectListItem
+        {
+            Value = p.ToString(),
+            Text = Enum.GetName(typeof(EmploymentType), p)
+        }).ToList();
+}
+
+@Html.DropDownListFor(o => o, items)
